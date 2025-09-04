@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Country Detector</title>
+    <meta name="description" content="Detect country from phone numbers - works offline">
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUGhvbmUgQ291bnRyeSBEZXRlY3RvciIsInNob3J0X25hbWUiOiJQaG9uZURldGVjdG9yIiwiZGVzY3JpcHRpb24iOiJEZXRlY3QgY291bnRyeSBmcm9tIHBob25lIG51bWJlcnMgLSB3b3JrcyBvZmZsaW5lIiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMxZTE4MjciLCJ0aGVtZV9jb2xvciI6IiM2MzY2ZjEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTWpRaUlHaGxhV2RvZEQwaU1qUWlJSFpwWlhkQ2IzZzlJakFnTUNBeU5DQXlOQ0lnWm1sc2JEMGlJek0wTXpjek1DSStQR05wY21Oc1pTQmplRDBpTVRJaUlHTjVQU0l4TWlJZ2NqMGlPU0lnWm1sc2JEMGlJek0wTXpjek1DSXZQanh3WVhSb0lHUTlJazB4TWlBeklHeDBJalVnWkRNZ05TQXpJREV6SURoakxUUXVOaUF3TFRndU5pQXpMalV0T0NBNGMweDBMamN0TVM0eklERXVOUzB5TGpRZ01pNDBMVE11TmpNZ01TNHhOMHcxSURSakxUSXVOMjRnTUNBeExUUWdNUzQ0TFRSR2JTMHhJREUzU0RGamMzUWdNWG9pSUdacGJHdzlJaU0yTXpaallqRWlMejQ4TDNOMlp6ND0iLCJzaXplcyI6IjE5Mngx"OTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9LHsic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTXpJaUlHaGxhV2RvZEQwaU16SWlJSFpwWlhkQ2IzZzlJakFnTUNBek1pQXpNaUlnWm1sc2JEMGlJek0wTXpjek1DSStQR05wY21Oc1pTQmplRDBpTVRZaUlHTjVQU0l4TmlJZ2NqMGlNVElpSUdacGJHdzlJaU16TkRNM00yTWlMejQ4Y0dGMGFDQmtQU0pOTVRZZ05DQk1kQ0k0SUdRMElEa2dORU14T0NBMElETTRJRGdnTXpnZ01UbHpMVEU0TFRndE5qUXVOUzB3TFRFeU55QTFPUzQxTFRFeU55QXhNemRUTnpNdU5TQTNJRGN6SURZeExUSTVMaklnTVRZdE5URWdNVFl0T0RFZ016SWdORE14TFRrZ01UUWdNVGRvTVdNdE5TNDBnTUMweExURTJJREl1TkMweE5pQTRMakZ6TVM0MklETXVNeUF5TGpFZ05TNDJJRElnT1M0eWN6QWdObTA0TFRrZ01URWdOWHBOTWpZZ016QkJNaUF5SURBZ01DQXdJRFF1TlNBeE1pNDFURE00SURNNE1IcGlJakJqTVM0MElEQWdNaUF4TGpNZ01pNDJJREU0ZGpKaU1TQXhJREJnTUNBd0lEQWdOaTQwSURVM01IcGhPUzQ0SURrdU9DQXdJREFnTVNBeU5TMDFMaklnTWpWc01qUmhNaTR4SURJdU1TQXdJREFnTVM0M0lERXVOU0E1TGpKYUlpOCtQQzl6ZG1jKyIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    
+    <!-- Apple touch icon -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiM2MzY2ZjEiIHJ4PSIzMiIvPjxwYXRoIGQ9Ik05NiA0OEw3MiA3Mkw5NiA5NkwxMjAgNzJMOTYgNDhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik05NiA3MkM5NiA3MiA4OCA3MiA4MCA4MEM3Mi44OCA4MC43MiA2OCA4NS4zMyA2OCA5NkM2OCA5NiA2OCA5NiA3MiAxMDRDNzIgMTA0IDcyIDEwNCA4MCAxMTJDODAgMTEyIDgwIDExMiA4OCAxMjBDODggMTIwIDg4IDEyMCA5NiAxMjBaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMzYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UEhPTkU8L3RleHQ+PC9zdmc+">
+    
+    <!-- iOS specific meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Phone Detector">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: black;
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: orangered;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .phone-input {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .phone-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .phone-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .detect-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 16px;
+            background: orangered;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .detect-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .detect-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .detect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease-out;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card.show {
+            display: block;
+        }
+
+        .result-header {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .phone-display {
+            font-size: 18px;
+            opacity: 0.9;
+            font-family: 'Courier New', monospace;
+        }
+
+        .error {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .success {
+            background: rgba(78, 205, 196, 0.2);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+
+        .history {
+            margin-top: 40px;
+        }
+
+        .history-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .history-phone {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .history-country {
+            opacity: 0.8;
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            background: orangered;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .install-prompt.show {
+            transform: translateY(0);
+        }
+
+        .install-prompt-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .install-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .install-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .install-btn, .dismiss-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .install-btn {
+            background: white;
+            color: #4ecdc4;
+        }
+
+        .dismiss-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(78, 205, 196, 0.9);
+            color: white;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .offline {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                padding: 30px 20px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-indicator" id="statusIndicator">
+        🟢 Online
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">📞</div>
+            <h1>Phone Detective</h1>
+            <div class="subtitle">Discover countries from phone numbers</div>
+        </div>
+
+        <div class="input-group">
+            <label class="input-label" for="phoneInput">Phone Number</label>
+            <input 
+                type="tel" 
+                id="phoneInput" 
+                class="phone-input" 
+                placeholder="+1 415 555 2671"
+                autocomplete="tel"
+            >
+        </div>
+
+        <button class="detect-btn" id="detectBtn" onclick="detectCountry()">
+            🔍 Detect Country
+        </button>
+
+        <div class="result-card" id="resultCard">
+            <div class="result-header">Country/Region</div>
+            <div class="result-value" id="countryResult"></div>
+            <div class="phone-display" id="phoneDisplay"></div>
+        </div>
+
+        <div class="history" id="historySection" style="display: none;">
+            <div class="history-title">Recent Searches</div>
+            <div id="historyList"></div>
+        </div>
+    </div>
+
+    <div class="install-prompt" id="installPrompt">
+        <div class="install-prompt-content">
+            <div class="install-text">📱 Install this app for offline use!</div>
+            <div class="install-buttons">
+                <button class="install-btn" onclick="installApp()">Install</button>
+                <button class="dismiss-btn" onclick="dismissInstall()">Later</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.10.14/libphonenumber-js.min.js"></script>
+    
+    <script>
+        // Country code to country name mapping for offline functionality
+        const countryData = {
+            'US': 'United States',
+            'CA': 'Canada',
+            'GB': 'United Kingdom',
+            'FR': 'France',
+            'DE': 'Germany',
+            'IT': 'Italy',
+            'ES': 'Spain',
+            'AU': 'Australia',
+            'JP': 'Japan',
+            'CN': 'China',
+            'IN': 'India',
+            'BR': 'Brazil',
+            'MX': 'Mexico',
+            'RU': 'Russia',
+            'KR': 'South Korea',
+            'NL': 'Netherlands',
+            'SE': 'Sweden',
+            'NO': 'Norway',
+            'DK': 'Denmark',
+            'FI': 'Finland',
+            'CH': 'Switzerland',
+            'AT': 'Austria',
+            'BE': 'Belgium',
+            'PL': 'Poland',
+            'TR': 'Turkey',
+            'GR': 'Greece',
+            'PT': 'Portugal',
+            'IE': 'Ireland',
+            'CZ': 'Czech Republic',
+            'HU': 'Hungary',
+            'RO': 'Romania',
+            'BG': 'Bulgaria',
+            'HR': 'Croatia',
+            'SK': 'Slovakia',
+            'SI': 'Slovenia',
+            'LT': 'Lithuania',
+            'LV': 'Latvia',
+            'EE': 'Estonia',
+            'IS': 'Iceland',
+            'MT': 'Malta',
+            'CY': 'Cyprus',
+            'LU': 'Luxembourg',
+            'AR': 'Argentina',
+            'CL': 'Chile',
+            'CO': 'Colombia',
+            'PE': 'Peru',
+            'VE': 'Venezuela',
+            'UY': 'Uruguay',
+            'PY': 'Paraguay',
+            'BO': 'Bolivia',
+            'EC': 'Ecuador',
+            'GT': 'Guatemala',
+            'HN': 'Honduras',
+            'SV': 'El Salvador',
+            'NI': 'Nicaragua',
+            'CR': 'Costa Rica',
+            'PA': 'Panama',
+            'DO': 'Dominican Republic',
+            'CU': 'Cuba',
+            'JM': 'Jamaica',
+            'HT': 'Haiti',
+            'PR': 'Puerto Rico',
+            'ZA': 'South Africa',
+            'EG': 'Egypt',
+            'NG': 'Nigeria',
+            'KE': 'Kenya',
+            'GH': 'Ghana',
+            'ET': 'Ethiopia',
+            'TZ': 'Tanzania',
+            'UG': 'Uganda',
+            'ZW': 'Zimbabwe',
+            'MA': 'Morocco',
+            'DZ': 'Algeria',
+            'TN': 'Tunisia',
+            'LY': 'Libya',
+            'SD': 'Sudan',
+            'AO': 'Angola',
+            'MZ': 'Mozambique',
+            'MG': 'Madagascar',
+            'ZM': 'Zambia',
+            'MW': 'Malawi',
+            'BW': 'Botswana',
+            'NA': 'Namibia',
+            'SZ': 'Eswatini',
+            'LS': 'Lesotho',
+            'TH': 'Thailand',
+            'VN': 'Vietnam',
+            'MY': 'Malaysia',
+            'SG': 'Singapore',
+            'PH': 'Philippines',
+            'ID': 'Indonesia',
+            'MM': 'Myanmar',
+            'KH': 'Cambodia',
+            'LA': 'Laos',
+            'BN': 'Brunei',
+            'TL': 'East Timor',
+            'NZ': 'New Zealand',
+            'FJ': 'Fiji',
+            'PG': 'Papua New Guinea',
+            'SB': 'Solomon Islands',
+            'VU': 'Vanuatu',
+            'NC': 'New Caledonia',
+            'PF': 'French Polynesia',
+            'WS': 'Samoa',
+            'TO': 'Tonga',
+            'KI': 'Kiribati',
+            'TV': 'Tuvalu',
+            'NR': 'Nauru',
+            'PW': 'Palau',
+            'FM': 'Micronesia',
+            'MH': 'Marshall Islands',
+            'IL': 'Israel',
+            'JO': 'Jordan',
+            'LB': 'Lebanon',
+            'SY': 'Syria',
+            'IQ': 'Iraq',
+            'IR': 'Iran',
+            'SA': 'Saudi Arabia',
+            'AE': 'United Arab Emirates',
+            'QA': 'Qatar',
+            'KW': 'Kuwait',
+            'BH': 'Bahrain',
+            'OM': 'Oman',
+            'YE': 'Yemen',
+            'AF': 'Afghanistan',
+            'PK': 'Pakistan',
+            'BD': 'Bangladesh',
+            'LK': 'Sri Lanka',
+            'MV': 'Maldives',
+            'BT': 'Bhutan',
+            'NP': 'Nepal',
+            'MN': 'Mongolia',
+            'KZ': 'Kazakhstan',
+            'KG': 'Kyrgyzstan',
+            'TJ': 'Tajikistan',
+            'TM': 'Turkmenistan',
+            'UZ': 'Uzbekistan',
+            'GE': 'Georgia',
+            'AM': 'Armenia',
+            'AZ': 'Azerbaijan',
+            'BY': 'Belarus',
+            'UA': 'Ukraine',
+            'MD': 'Moldova',
+            'RO': 'Romania'
+        };
+
+        // PWA variables
+        let deferredPrompt;
+        let isInstalled = false;
+        let searchHistory = JSON.parse(localStorage.getItem('phoneSearchHistory') || '[]');
+
+        // Service Worker registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('data:application/javascript;base64,' + btoa(`
+                    const CACHE_NAME = 'phone-detector-v1';
+                    const urlsToCache = [
+                        '/',
+                        'https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.10.14/libphonenumber-js.min.js'
+                    ];
+
+                    self.addEventListener('install', event => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(cache => cache.addAll(urlsToCache))
+                        );
+                    });
+
+                    self.addEventListener('fetch', event => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(response => {
+                                    if (response) {
+                                        return response;
+                                    }
+                                    return fetch(event.request);
+                                }
+                            )
+                        );
+                    });
+                `))
+                .then(registration => {
+                    console.log('ServiceWorker registration successful');
+                })
+                .catch(error => {
+                    console.log('ServiceWorker registration failed');
+                });
+            });
+        }
+
+        // Install prompt handling
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallPrompt();
+        });
+
+        window.addEventListener('appinstalled', () => {
+            isInstalled = true;
+            hideInstallPrompt();
+        });
+
+        function showInstallPrompt() {
+            const prompt = document.getElementById('installPrompt');
+            setTimeout(() => {
+                prompt.classList.add('show');
+            }, 3000);
+        }
+
+        function hideInstallPrompt() {
+            const prompt = document.getElementById('installPrompt');
+            prompt.classList.remove('show');
+        }
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+            hideInstallPrompt();
+        }
+
+        function dismissInstall() {
+            hideInstallPrompt();
+        }
+
+        // Network status handling
+        function updateNetworkStatus() {
+            const indicator = document.getElementById('statusIndicator');
+            if (navigator.onLine) {
+                indicator.textContent = '🟢 Online';
+                indicator.classList.remove('offline');
+            } else {
+                indicator.textContent = '🔴 Offline';
+                indicator.classList.add('offline');
+            }
+        }
+
+        window.addEventListener('online', updateNetworkStatus);
+        window.addEventListener('offline', updateNetworkStatus);
+
+        // Phone number detection
+        function detectCountry() {
+            const phoneInput = document.getElementById('phoneInput');
+            const phoneNumber = phoneInput.value.trim();
+            const resultCard = document.getElementById('resultCard');
+            const countryResult = document.getElementById('countryResult');
+            const phoneDisplay = document.getElementById('phoneDisplay');
+            const detectBtn = document.getElementById('detectBtn');
+
+            if (!phoneNumber) {
+                showResult('Please enter a phone number', phoneNumber, false);
+                return;
+            }
+
+            detectBtn.disabled = true;
+            detectBtn.textContent = '🔍 Detecting...';
+
+            try {
+                // Parse the phone number using libphonenumber-js
+                const parsed = libphonenumber.parsePhoneNumber(phoneNumber);
+                
+                if (!parsed || !parsed.isValid()) {
+                    throw new Error('Invalid phone number format');
+                }
+
+                const countryCode = parsed.country;
+                const countryName = countryData[countryCode] || countryCode;
+                const formattedNumber = parsed.formatInternational();
+
+                showResult(countryName, formattedNumber, true);
+                addToHistory(formattedNumber, countryName);
+                
+            } catch (error) {
+                console.error('Error parsing phone number:', error);
+                showResult('Invalid phone number format. Please include country code (e.g., +1 for US)', phoneNumber, false);
+            }
+
+            detectBtn.disabled = false;
+            detectBtn.textContent = '🔍 Detect Country';
+        }
+
+        function showResult(country, phone, isSuccess) {
+            const resultCard = document.getElementById('resultCard');
+            const countryResult = document.getElementById('countryResult');
+            const phoneDisplay = document.getElementById('phoneDisplay');
+
+            countryResult.textContent = country;
+            phoneDisplay.textContent = phone;
+            
+            resultCard.className = 'result-card show ' + (isSuccess ? 'success' : 'error');
+        }
+
+        function addToHistory(phone, country) {
+            const historyItem = {
+                phone: phone,
+                country: country,
+                timestamp: new Date().toLocaleString()
+            };
+
+            // Add to beginning of array and limit to 10 items
+            searchHistory.unshift(historyItem);
+            searchHistory = searchHistory.slice(0, 10);
+            
+            // Save to localStorage
+            localStorage.setItem('phoneSearchHistory', JSON.stringify(searchHistory));
+            
+            // Update display
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const historySection = document.getElementById('historySection');
+            const historyList = document.getElementById('historyList');
+
+            if (searchHistory.length === 0) {
+                historySection.style.display = 'none';
+                return;
+            }
+
+            historySection.style.display = 'block';
+            historyList.innerHTML = '';
+
+            searchHistory.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <div class="history-phone">${item.phone}</div>
+                    <div class="history-country">${item.country}</div>
+                `;
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        // Enter key support
+        document.getElementById('phoneInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                detectCountry();
+            }
+        });
+
+        // Auto-format phone input
+        document.getElementById('phoneInput').addEventListener('input', function(event) {
+            let value = event.target.value;
+            
+            // Remove all non-numeric characters except + and spaces
+            value = value.replace(/[^\d\s\+\-\(\)]/g, '');
+            
+            // Ensure + is only at the beginning
+            if (value.indexOf('+') > 0) {
+                value = value.replace(/\+/g, '');
+                value = '+' + value;
+            }
+            
+            event.target.value = value;
+        });
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNetworkStatus();
+            updateHistoryDisplay();
+            
+            // Auto-focus input on desktop
+            if (window.innerWidth > 768) {
+                document.getElementById('phoneInput').focus();
+            }
+        });
+
+        // Add some example numbers for testing
+        function fillExample(number) {
+            document.getElementById('phoneInput').value = number;
+            detectCountry();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // Ctrl/Cmd + K to focus input
+            if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+                event.preventDefault();
+                document.getElementById('phoneInput').focus();
+                document.getElementById('phoneInput').select();
+            }
+        });
+    </script>
+
+    <!-- Quick examples (hidden by default, can be shown with a button) -->
+    <div style="position: fixed; bottom: 80px; right: 20px; display: none;" id="exampleMenu">
+        <div style="background: rgba(0,0,0,0.95); padding: 15px; border-radius: 12px; font-size: 12px; border: 1px solid rgba(128, 128, 128, 0.3); backdrop-filter: blur(20px); color: white;">
+            <div style="margin-bottom: 10px; font-weight: bold;">Try these examples:</div>
+            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+1 415 555 2671')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇺🇸 +1 415 555 2671</div>
+            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+44 20 7946 0958')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇬🇧 +44 20 7946 0958</div>
+            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+49 30 12345678')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇩🇪 +49 30 12345678</div>
+            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+81 3 1234 5678')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇯🇵 +81 3 1234 5678</div>
+        </div>
+    </div>
+
+    <style>
+        @media (prefers-color-scheme: light) {
+            #exampleMenu > div {
+                background: rgba(255,255,255,0.95) !important;
+                color: black !important;
+                border-color: rgba(128, 128, 128, 0.3) !important;
+            }
+        }
+    </style>
+
+    <!-- Floating action button for examples -->
+    <div style="position: fixed; bottom: 140px; right: 20px; width: 56px; height: 56px; background: rgba(255, 107, 107, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.3); font-size: 24px; transition: all 0.3s ease;" onclick="toggleExamples()" id="exampleBtn">
+        💡
+    </div>
+
+    <script>
+        function toggleExamples() {
+            const menu = document.getElementById('exampleMenu');
+            const btn = document.getElementById('exampleBtn');
+            
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+                btn.innerHTML = '✖️';
+                btn.style.transform = 'rotate(180deg)';
+            } else {
+                menu.style.display = 'none';
+                btn.innerHTML = '💡';
+                btn.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Close examples menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('exampleMenu');
+            const btn = document.getElementById('exampleBtn');
+            
+            if (!menu.contains(event.target) && !btn.contains(event.target)) {
+                menu.style.display = 'none';
+                btn.innerHTML = '💡';
+                btn.style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+</body>
+</html>
