@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phone Country Detector</title>
     <meta name="description" content="Detect country from phone numbers - works offline">
-    <meta name="theme-color" content="#6366f1">
-    
+    <meta name="theme-color" content="#ff6347">
+
     <!-- PWA manifest -->
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUGhvbmUgQ291bnRyeSBEZXRlY3RvciIsInNob3J0X25hbWUiOiJQaG9uZURldGVjdG9yIiwiZGVzY3JpcHRpb24iOiJEZXRlY3QgY291bnRyeSBmcm9tIHBob25lIG51bWJlcnMgLSB3b3JrcyBvZmZsaW5lIiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMxZTE4MjciLCJ0aGVtZV9jb2xvciI6IiM2MzY2ZjEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTWpRaUlHaGxhV2RvZEQwaU1qUWlJSFpwWlhkQ2IzZzlJakFnTUNBeU5DQXlOQ0lnWm1sc2JEMGlJek0wTXpjek1DSStQR05wY21Oc1pTQmplRDBpTVRJaUlHTjVQU0l4TWlJZ2NqMGlPU0lnWm1sc2JEMGlJek0wTXpjek1DSXZQanh3WVhSb0lHUTlJazB4TWlBeklHeDBJalVnWkRNZ05TQXpJREV6SURoakxUUXVOaUF3TFRndU5pQXpMalV0T0NBNGMweDBMamN0TVM0eklERXVOUzB5TGpRZ01pNDBMVE11TmpNZ01TNHhOMHcxSURSakxUSXVOMjRnTUNBeExUUWdNUzQ0TFRSR2JTMHhJREUzU0RGamMzUWdNWG9pSUdacGJHdzlJaU0yTXpaallqRWlMejQ4TDNOMlp6ND0iLCJzaXplcyI6IjE5Mngx"OTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9LHsic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTXpJaUlHaGxhV2RvZEQwaU16SWlJSFpwWlhkQ2IzZzlJakFnTUNBek1pQXpNaUlnWm1sc2JEMGlJek0wTXpjek1DSStQR05wY21Oc1pTQmplRDBpTVRZaUlHTjVQU0l4TmlJZ2NqMGlNVElpSUdacGJHdzlJaU16TkRNM00yTWlMejQ4Y0dGMGFDQmtQU0pOTVRZZ05DQk1kQ0k0SUdRMElEa2dORU14T0NBMElETTRJRGdnTXpnZ01UbHpMVEU0TFRndE5qUXVOUzB3TFRFeU55QTFPUzQxTFRFeU55QXhNemRUTnpNdU5TQTNJRGN6SURZeExUSTVMaklnTVRZdE5URWdNVFl0T0RFZ016SWdORE14TFRrZ01UUWdNVGRvTVdNdE5TNDBnTUMweExURTJJREl1TkMweE5pQTRMakZ6TVM0MklETXVNeUF5TGpFZ05TNDJJRElnT1M0eWN6QWdObTA0TFRrZ01URWdOWHBOTWpZZ016QkJNaUF5SURBZ01DQXdJRFF1TlNBeE1pNDFURE00SURNNE1IcGlJakJqTVM0MElEQWdNaUF4TGpNZ01pNDJJREU0ZGpKaU1TQXhJREJnTUNBd0lEQWdOaTQwSURVM01IcGhPUzQ0SURrdU9DQXdJREFnTVNBeU5TMDFMaklnTWpWc01qUmhNaTR4SURJdU1TQXdJREFnTVM0M0lERXVOU0E1TGpKYUlpOCtQQzl6ZG1jKyIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlBob25lIENvdW50cnkgRGV0ZWN0b3IiLAogICJzaG9ydF9uYW1lIjogIlBob25lRGV0ZWN0b3IiLAogICJkZXNjcmlwdGlvbiI6ICJEZXRlY3QgY291bnRyeSBmcm9tIHBob25lIG51bWJlcnMgLSB3b3JrcyBvZmZsaW5lIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwMDAwMDAiLAogICJ0aGVtZV9jb2xvciI6ICIjZmY2MzQ3IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTVRreUlpQm9aV2xuYUhROU9UWWlJSFpwWlhkQ2IzZzlJakFnTUNBeE9USWdNVGt5SWlCbWFXeHNQU0lqWm1ZMk16UTNJaUJ5ZUQwaU16SWlQanh3WVhSb0lHUTlJazB4TURFdU5pQTBObEl6TVNBM01VdzVNUzQySURrM1RERHpJREV4T0V3eE1ERXVOaUEwTmtvaUlHWnBiR3c5SW1KbVptWmlabVlpTHo0OGNHRjBhQ0JrUFNKTk9UVWDNE0V4TTJFdE1UTXROak15Y0RNdU5XRXlOaUF5TmlBd0lEQXdJRGdnTVRRdE1UTTNJRFV0TWpkalpEZ3RNVFF0TVRRZ01UUXRNVFF1TnkweE55NGpJRGd1TXkweE55NHpJRUYzWWlBNUlneDZqWXpJRGd1TXlBNUlETXVOU0E0UzBveE1UZ2dOVEV5ZFdGaWxGOFB3OE1QeEVpSUdacGJHdzlJblpwYldGNE5TMDJJaTgrWGVuT2g4UEJsMlBsd1ZJVUZoTXBMZUJKdmhUK1RabklhUzlGZDAxa1VjVUQvTGNqSkJIeVVvRVJ0ZEQ9IiwKICAgICAgInNpemVzIjogIjE5Mngx"OTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
     
     <!-- Apple touch icon -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiM2MzY2ZjEiIHJ4PSIzMiIvPjxwYXRoIGQ9Ik05NiA0OEw3MiA3Mkw5NiA5NkwxMjAgNzJMOTYgNDhaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik05NiA3MkM5NiA3MiA4OCA3MiA4MCA4MEM3Mi44OCA4MC43MiA2OCA4NS4zMyA2OCA5NkM2OCA5NiA2OCA5NiA3MiAxMDRDNzIgMTA0IDcyIDEwNCA4MCAxMTJDODAgMTEyIDgwIDExMiA4OCAxMjBDODggMTIwIDg4IDEyMCA5NiAxMjBaIiBmaWxsPSJ3aGl0ZSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMzYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UEhPTkU8L3RleHQ+PC9zdmc+">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9IiNmZjYzNDciIHJ4PSIzMiI+PHBhdGggZD0iTTEwMS42IDQ2TDMxIDcxTDkxLjYgOTdMMCAxMThMMTAxLjYgNDZaIiBmaWxsPSJiZmZmZmZmIi8+PHBhdGggZD0iTTk1IDE0M2EtMTMgNi4zMnAzLjVhMjYgMjYgMCAwIDAgOCAxNC0xMTcgNS0yN2NEOC0xNC0xNC0xNC0xNC43LTE3LjMgOC4zLTE3LjNBM2IgOSAzeWoza1E2UDE4IDUxMnVhYmlsMF9Pd0VQd0U9IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==">
     
     <!-- iOS specific meta tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -27,7 +27,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: black;
+            background: #000000 ;
             min-height: 100vh;
             padding: 20px;
             color: white;
@@ -37,11 +37,11 @@
             max-width: 400px;
             margin: 0 auto;
             padding: 40px 30px;
-            background: rgba(0, 0, 0, 0.1);
+            background: black;
             backdrop-filter: blur(20px);
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgb(107, 107, 107);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.6s ease-out;
         }
 
@@ -71,7 +71,8 @@
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            animation: pulse 2s infinite;
+            animation: pulse 3s infinite;
+            box-shadow: 0 8px 32px rgba(255, 99, 71, 0.4);
         }
 
         @keyframes pulse {
@@ -87,6 +88,11 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 8px;
+            background: orangered;
+            color: white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .subtitle {
@@ -113,7 +119,7 @@
             font-size: 18px;
             border: none;
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 2px solid transparent;
             transition: all 0.3s ease;
@@ -126,10 +132,9 @@
 
         .phone-input:focus {
             outline: none;
-            border-color: rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.2);
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .detect-btn {
@@ -143,13 +148,11 @@
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
         }
 
         .detect-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
         .detect-btn:active {
@@ -163,11 +166,11 @@
         }
 
         .result-card {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 25px;
             margin-top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             animation: fadeIn 0.5s ease-out;
             display: none;
@@ -203,17 +206,17 @@
         .phone-display {
             font-size: 18px;
             opacity: 0.9;
-            font-family: 'Courier New', monospace;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
         }
 
         .error {
-            background: rgba(255, 107, 107, 0.2);
+            background: rgba(255, 107, 107, 0.15);
             border-color: rgba(255, 107, 107, 0.3);
         }
 
         .success {
-            background: rgba(78, 205, 196, 0.2);
-            border-color: rgba(78, 205, 196, 0.3);
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
         }
 
         .history {
@@ -228,16 +231,23 @@
         }
 
         .history-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 10px;
             font-size: 14px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
         }
 
         .history-phone {
-            font-family: 'Courier New', monospace;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
             font-weight: 600;
             margin-bottom: 5px;
         }
@@ -246,42 +256,25 @@
             opacity: 0.8;
         }
 
-        .install-prompt {
+        .status-indicator {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            top: 20px;
             right: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-            background: orangered;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(34, 197, 94, 0.9);
             color: white;
-            padding: 15px 20px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transform: translateY(100px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: all 0.3s ease;
         }
 
-        .install-prompt.show {
-            transform: translateY(0);
+        .offline {
+            background: rgba(239, 68, 68, 0.9);
         }
 
-        .install-prompt-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .install-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .install-buttons {
-            display: flex;
-            gap: 10px;
-        }
 
         .install-btn, .dismiss-btn {
             padding: 8px 16px;
@@ -293,32 +286,73 @@
             transition: all 0.2s ease;
         }
 
-        .install-btn {
-            background: white;
-            color: #4ecdc4;
-        }
-
         .dismiss-btn {
             background: rgba(255, 255, 255, 0.2);
             color: white;
         }
 
-        .status-indicator {
+        .example-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            background: rgba(78, 205, 196, 0.9);
-            color: white;
-            backdrop-filter: blur(10px);
+            bottom: 20px;
+            left: 20px;
+            width: 56px;
+            height: 56px;
+            background: rgb(204, 51, 31);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s ease;
             z-index: 100;
         }
 
-        .offline {
-            background: rgba(255, 107, 107, 0.2);
+
+        .examples-menu {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px;
+            border-radius: 16px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            color: white;
+            display: none;
+            z-index: 99;
+            min-width: 250px;
+        }
+
+        .examples-menu.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .examples-title {
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .example-item {
+            cursor: pointer;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .example-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .flag {
+            margin-right: 8px;
         }
 
         @media (max-width: 480px) {
@@ -329,6 +363,15 @@
             
             body {
                 padding: 10px;
+            }
+
+            .install-prompt-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .install-text {
+                margin-bottom: 15px;
             }
         }
     </style>
@@ -372,20 +415,31 @@
         </div>
     </div>
 
-    <div class="install-prompt" id="installPrompt">
-        <div class="install-prompt-content">
-            <div class="install-text">📱 Install this app for offline use!</div>
-            <div class="install-buttons">
-                <button class="install-btn" onclick="installApp()">Install</button>
-                <button class="dismiss-btn" onclick="dismissInstall()">Later</button>
-            </div>
+    <div class="example-btn" onclick="toggleExamples()" id="exampleBtn">
+        💡
+    </div>
+
+    <div class="examples-menu" id="examplesMenu">
+        <div class="examples-title">Try these examples:</div>
+        <div class="example-item" onclick="fillExample('+1 415 555 2671')">
+            <span class="flag">🇺🇸</span>+1 415 555 2671 (US)
+        </div>
+        <div class="example-item" onclick="fillExample('+44 20 7946 0958')">
+            <span class="flag">🇬🇧</span>+44 20 7946 0958 (UK)
+        </div>
+        <div class="example-item" onclick="fillExample('+49 30 12345678')">
+            <span class="flag">🇩🇪</span>+49 30 12345678 (Germany)
+        </div>
+        <div class="example-item" onclick="fillExample('+81 3 1234 5678')">
+            <span class="flag">🇯🇵</span>+81 3 1234 5678 (Japan)
+        </div>
+        <div class="example-item" onclick="fillExample('+33 1 42 86 83 26')">
+            <span class="flag">🇫🇷</span>+33 1 42 86 83 26 (France)
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.10.14/libphonenumber-js.min.js"></script>
-    
     <script>
-        // Country code to country name mapping for offline functionality
+        // Complete country data for offline functionality
         const countryData = {
             'US': 'United States',
             'CA': 'Canada',
@@ -533,47 +587,262 @@
             'RO': 'Romania'
         };
 
+
+
+     // Phone number parsing patterns for all world country codes (E.164 standard)
+const phonePatterns = {
+    "1": { country: "US/CA/Caribbean", minLength: 10, maxLength: 10 },
+    "7": { country: "RU/KZ", minLength: 10, maxLength: 10 },
+    "20": { country: "EG", minLength: 10, maxLength: 11 },
+    "27": { country: "ZA", minLength: 9, maxLength: 9 },
+    "30": { country: "GR", minLength: 10, maxLength: 10 },
+    "31": { country: "NL", minLength: 9, maxLength: 9 },
+    "32": { country: "BE", minLength: 8, maxLength: 9 },
+    "33": { country: "FR", minLength: 9, maxLength: 10 },
+    "34": { country: "ES", minLength: 9, maxLength: 9 },
+    "36": { country: "HU", minLength: 8, maxLength: 9 },
+    "39": { country: "IT", minLength: 9, maxLength: 11 },
+    "40": { country: "RO", minLength: 9, maxLength: 9 },
+    "41": { country: "CH", minLength: 9, maxLength: 9 },
+    "43": { country: "AT", minLength: 4, maxLength: 13 },
+    "44": { country: "GB", minLength: 10, maxLength: 11 },
+    "45": { country: "DK", minLength: 8, maxLength: 8 },
+    "46": { country: "SE", minLength: 7, maxLength: 9 },
+    "47": { country: "NO", minLength: 8, maxLength: 8 },
+    "48": { country: "PL", minLength: 9, maxLength: 9 },
+    "49": { country: "DE", minLength: 11, maxLength: 12 },
+    "51": { country: "PE", minLength: 8, maxLength: 9 },
+    "52": { country: "MX", minLength: 10, maxLength: 10 },
+    "53": { country: "CU", minLength: 8, maxLength: 8 },
+    "54": { country: "AR", minLength: 6, maxLength: 13 },
+    "55": { country: "BR", minLength: 10, maxLength: 11 },
+    "56": { country: "CL", minLength: 8, maxLength: 9 },
+    "57": { country: "CO", minLength: 10, maxLength: 10 },
+    "58": { country: "VE", minLength: 10, maxLength: 10 },
+    "60": { country: "MY", minLength: 8, maxLength: 10 },
+    "61": { country: "AU", minLength: 9, maxLength: 9 },
+    "62": { country: "ID", minLength: 7, maxLength: 11 },
+    "63": { country: "PH", minLength: 10, maxLength: 10 },
+    "64": { country: "NZ", minLength: 8, maxLength: 9 },
+    "65": { country: "SG", minLength: 8, maxLength: 8 },
+    "66": { country: "TH", minLength: 8, maxLength: 9 },
+    "81": { country: "JP", minLength: 10, maxLength: 11 },
+    "82": { country: "KR", minLength: 8, maxLength: 11 },
+    "84": { country: "VN", minLength: 9, maxLength: 10 },
+    "86": { country: "CN", minLength: 11, maxLength: 11 },
+    "90": { country: "TR", minLength: 10, maxLength: 10 },
+    "91": { country: "IN", minLength: 10, maxLength: 10 },
+    "92": { country: "PK", minLength: 10, maxLength: 10 },
+    "93": { country: "AF", minLength: 9, maxLength: 9 },
+    "94": { country: "LK", minLength: 9, maxLength: 9 },
+    "95": { country: "MM", minLength: 8, maxLength: 10 },
+    "98": { country: "IR", minLength: 10, maxLength: 10 },
+    "211": { country: "SS", minLength: 9, maxLength: 9 },
+    "212": { country: "MA", minLength: 9, maxLength: 9 },
+    "213": { country: "DZ", minLength: 9, maxLength: 9 },
+    "216": { country: "TN", minLength: 8, maxLength: 8 },
+    "218": { country: "LY", minLength: 9, maxLength: 9 },
+    "220": { country: "GM", minLength: 7, maxLength: 7 },
+    "221": { country: "SN", minLength: 9, maxLength: 9 },
+    "222": { country: "MR", minLength: 8, maxLength: 8 },
+    "223": { country: "ML", minLength: 8, maxLength: 8 },
+    "224": { country: "GN", minLength: 9, maxLength: 9 },
+    "225": { country: "CI", minLength: 8, maxLength: 10 },
+    "226": { country: "BF", minLength: 8, maxLength: 8 },
+    "227": { country: "NE", minLength: 8, maxLength: 8 },
+    "228": { country: "TG", minLength: 8, maxLength: 8 },
+    "229": { country: "BJ", minLength: 8, maxLength: 8 },
+    "230": { country: "MU", minLength: 8, maxLength: 8 },
+    "231": { country: "LR", minLength: 7, maxLength: 8 },
+    "232": { country: "SL", minLength: 8, maxLength: 8 },
+    "233": { country: "GH", minLength: 9, maxLength: 9 },
+    "234": { country: "NG", minLength: 7, maxLength: 8 },
+    "235": { country: "TD", minLength: 8, maxLength: 8 },
+    "236": { country: "CF", minLength: 8, maxLength: 8 },
+    "237": { country: "CM", minLength: 8, maxLength: 9 },
+    "238": { country: "CV", minLength: 7, maxLength: 7 },
+    "239": { country: "ST", minLength: 7, maxLength: 7 },
+    "240": { country: "GQ", minLength: 9, maxLength: 9 },
+    "241": { country: "GA", minLength: 7, maxLength: 7 },
+    "242": { country: "CG", minLength: 9, maxLength: 9 },
+    "243": { country: "CD", minLength: 9, maxLength: 9 },
+    "244": { country: "AO", minLength: 9, maxLength: 9 },
+    "248": { country: "SC", minLength: 7, maxLength: 7 },
+    "249": { country: "SD", minLength: 9, maxLength: 9 },
+    "250": { country: "RW", minLength: 9, maxLength: 9 },
+    "251": { country: "ET", minLength: 9, maxLength: 9 },
+    "252": { country: "SO", minLength: 8, maxLength: 9 },
+    "253": { country: "DJ", minLength: 8, maxLength: 8 },
+    "254": { country: "KE", minLength: 9, maxLength: 9 },
+    "255": { country: "TZ", minLength: 9, maxLength: 9 },
+    "256": { country: "UG", minLength: 9, maxLength: 9 },
+    "257": { country: "BI", minLength: 8, maxLength: 8 },
+    "258": { country: "MZ", minLength: 9, maxLength: 9 },
+    "260": { country: "ZM", minLength: 9, maxLength: 9 },
+    "261": { country: "MG", minLength: 9, maxLength: 9 },
+    "262": { country: "RE/YT", minLength: 9, maxLength: 9 },
+    "263": { country: "ZW", minLength: 9, maxLength: 9 },
+    "264": { country: "NA", minLength: 9, maxLength: 9 },
+    "265": { country: "MW", minLength: 9, maxLength: 9 },
+    "266": { country: "LS", minLength: 8, maxLength: 8 },
+    "267": { country: "BW", minLength: 7, maxLength: 8 },
+    "268": { country: "SZ", minLength: 8, maxLength: 8 },
+    "269": { country: "KM", minLength: 7, maxLength: 7 },
+    "290": { country: "SH", minLength: 4, maxLength: 4 },
+    "291": { country: "ER", minLength: 7, maxLength: 7 },
+    "297": { country: "AW", minLength: 7, maxLength: 7 },
+    "298": { country: "FO", minLength: 6, maxLength: 6 },
+    "299": { country: "GL", minLength: 6, maxLength: 6 },
+    "350": { country: "GI", minLength: 8, maxLength: 8 },
+    "351": { country: "PT", minLength: 9, maxLength: 9 },
+    "352": { country: "LU", minLength: 4, maxLength: 11 },
+    "353": { country: "IE", minLength: 7, maxLength: 9 },
+    "354": { country: "IS", minLength: 7, maxLength: 7 },
+    "355": { country: "AL", minLength: 8, maxLength: 9 },
+    "356": { country: "MT", minLength: 8, maxLength: 8 },
+    "357": { country: "CY", minLength: 8, maxLength: 8 },
+    "358": { country: "FI", minLength: 5, maxLength: 12 },
+    "359": { country: "BG", minLength: 8, maxLength: 9 },
+    "370": { country: "LT", minLength: 8, maxLength: 8 },
+    "371": { country: "LV", minLength: 8, maxLength: 8 },
+    "372": { country: "EE", minLength: 7, maxLength: 8 },
+    "373": { country: "MD", minLength: 8, maxLength: 8 },
+    "374": { country: "AM", minLength: 8, maxLength: 8 },
+    "375": { country: "BY", minLength: 9, maxLength: 9 },
+    "376": { country: "AD", minLength: 6, maxLength: 6 },
+    "377": { country: "MC", minLength: 8, maxLength: 8 },
+    "378": { country: "SM", minLength: 10, maxLength: 10 },
+    "379": { country: "VA", minLength: 6, maxLength: 6 },
+    "380": { country: "UA", minLength: 9, maxLength: 9 },
+    "381": { country: "RS", minLength: 8, maxLength: 9 },
+    "382": { country: "ME", minLength: 8, maxLength: 8 },
+    "383": { country: "XK", minLength: 8, maxLength: 8 },
+    "385": { country: "HR", minLength: 8, maxLength: 9 },
+    "386": { country: "SI", minLength: 8, maxLength: 8 },
+    "387": { country: "BA", minLength: 8, maxLength: 8 },
+    "389": { country: "MK", minLength: 8, maxLength: 8 },
+    "420": { country: "CZ", minLength: 9, maxLength: 9 },
+    "421": { country: "SK", minLength: 9, maxLength: 9 },
+    "423": { country: "LI", minLength: 7, maxLength: 7 },
+    "500": { country: "FK", minLength: 5, maxLength: 5 },
+    "501": { country: "BZ", minLength: 7, maxLength: 7 },
+    "502": { country: "GT", minLength: 8, maxLength: 8 },
+    "503": { country: "SV", minLength: 8, maxLength: 8 },
+    "504": { country: "HN", minLength: 8, maxLength: 8 },
+    "505": { country: "NI", minLength: 8, maxLength: 8 },
+    "506": { country: "CR", minLength: 8, maxLength: 8 },
+    "507": { country: "PA", minLength: 8, maxLength: 8 },
+    "508": { country: "PM", minLength: 6, maxLength: 6 },
+    "509": { country: "HT", minLength: 8, maxLength: 8 },
+    "590": { country: "GP/MF/BL", minLength: 9, maxLength: 9 },
+    "591": { country: "BO", minLength: 8, maxLength: 8 },
+    "592": { country: "GY", minLength: 7, maxLength: 7 },
+    "593": { country: "EC", minLength: 8, maxLength: 9 },
+    "594": { country: "GF", minLength: 9, maxLength: 9 },
+    "595": { country: "PY", minLength: 8, maxLength: 9 },
+    "596": { country: "MQ", minLength: 9, maxLength: 9 },
+    "597": { country: "SR", minLength: 7, maxLength: 7 },
+    "598": { country: "UY", minLength: 8, maxLength: 8 },
+    "599": { country: "CW/BQ", minLength: 7, maxLength: 8 },
+    "670": { country: "TL", minLength: 7, maxLength: 7 },
+    "672": { country: "AQ/NF", minLength: 6, maxLength: 6 },
+    "673": { country: "BN", minLength: 7, maxLength: 7 },
+    "674": { country: "NR", minLength: 7, maxLength: 7 },
+    "675": { country: "PG", minLength: 8, maxLength: 8 },
+    "676": { country: "TO", minLength: 7, maxLength: 7 },
+    "677": { country: "SB", minLength: 7, maxLength: 7 },
+    "678": { country: "VU", minLength: 7, maxLength: 7 },
+    "679": { country: "FJ", minLength: 7, maxLength: 7 },
+    "680": { country: "PW", minLength: 7, maxLength: 7 },
+    "681": { country: "WF", minLength: 6, maxLength: 6 },
+    "682": { country: "CK", minLength: 5, maxLength: 5 },
+    "683": { country: "NU", minLength: 4, maxLength: 4 },
+    "685": { country: "WS", minLength: 7, maxLength: 7 },
+    "686": { country: "KI", minLength: 8, maxLength: 8 },
+    "687": { country: "NC", minLength: 6, maxLength: 6 },
+    "688": { country: "TV", minLength: 5, maxLength: 5 },
+    "689": { country: "PF", minLength: 8, maxLength: 8 },
+    "690": { country: "TK", minLength: 4, maxLength: 4 },
+    "691": { country: "FM", minLength: 7, maxLength: 7 },
+    "692": { country: "MH", minLength: 7, maxLength: 7 },
+    "850": { country: "KP", minLength: 9, maxLength: 10 },
+    "852": { country: "HK", minLength: 8, maxLength: 8 },
+    "853": { country: "MO", minLength: 8, maxLength: 8 },
+    "855": { country: "KH", minLength: 8, maxLength: 9 },
+    "856": { country: "LA", minLength: 8, maxLength: 10 },
+    "880": { country: "BD", minLength: 10, maxLength: 10 },
+    "886": { country: "TW", minLength: 9, maxLength: 9 },
+    "960": { country: "MV", minLength: 7, maxLength: 7 },
+    "961": { country: "LB", minLength: 7, maxLength: 8 },
+    "962": { country: "JO", minLength: 8, maxLength: 9 },
+    "963": { country: "SY", minLength: 8, maxLength: 9 },
+    "964": { country: "IQ", minLength: 8, maxLength: 10 },
+    "965": { country: "KW", minLength: 8, maxLength: 8 },
+    "966": { country: "SA", minLength: 8, maxLength: 9 },
+    "967": { country: "YE", minLength: 8, maxLength: 9 },
+    "968": { country: "OM", minLength: 8, maxLength: 8 },
+    "970": { country: "PS", minLength: 8, maxLength: 9 },
+    "971": { country: "AE", minLength: 8, maxLength: 9 },
+    "972": { country: "IL", minLength: 8, maxLength: 9 },
+    "973": { country: "BH", minLength: 8, maxLength: 8 },
+    "974": { country: "QA", minLength: 8, maxLength: 8 },
+    "975": { country: "BT", minLength: 8, maxLength: 8 },
+    "976": { country: "MN", minLength: 8, maxLength: 9 },
+    "977": { country: "NP", minLength: 8, maxLength: 10 },
+    "992": { country: "TJ", minLength: 9, maxLength: 9 },
+    "993": { country: "TM", minLength: 8, maxLength: 8 },
+    "994": { country: "AZ", minLength: 9, maxLength: 9 },
+    "995": { country: "GE", minLength: 9, maxLength: 9 },
+    "996": { country: "KG", minLength: 9, maxLength: 9 },
+    "998": { country: "UZ", minLength: 9, maxLength: 9 }
+};
+
+
         // PWA variables
         let deferredPrompt;
-        let isInstalled = false;
-        let searchHistory = JSON.parse(localStorage.getItem('phoneSearchHistory') || '[]');
+        let searchHistory = [];
+
+        // Load search history from memory (no localStorage dependency for offline)
+        function loadHistory() {
+            try {
+                const stored = localStorage.getItem('phoneSearchHistory');
+                if (stored) {
+                    searchHistory = JSON.parse(stored);
+                }
+            } catch (e) {
+                console.log('localStorage not available, using memory storage');
+                searchHistory = [];
+            }
+        }
+
+        // Save search history
+        function saveHistory() {
+            try {
+                localStorage.setItem('phoneSearchHistory', JSON.stringify(searchHistory));
+            } catch (e) {
+                console.log('localStorage not available, using memory storage only');
+            }
+        }
 
         // Service Worker registration
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('data:application/javascript;base64,' + btoa(`
-                    const CACHE_NAME = 'phone-detector-v1';
-                    const urlsToCache = [
-                        '/',
-                        'https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.10.14/libphonenumber-js.min.js'
-                    ];
-
-                    self.addEventListener('install', event => {
-                        event.waitUntil(
-                            caches.open(CACHE_NAME)
-                                .then(cache => cache.addAll(urlsToCache))
-                        );
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('Service Worker registered successfully:', registration);
+                    
+                    // Listen for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                console.log('New version available');
+                            }
+                        });
                     });
-
-                    self.addEventListener('fetch', event => {
-                        event.respondWith(
-                            caches.match(event.request)
-                                .then(response => {
-                                    if (response) {
-                                        return response;
-                                    }
-                                    return fetch(event.request);
-                                }
-                            )
-                        );
-                    });
-                `))
-                .then(registration => {
-                    console.log('ServiceWorker registration successful');
-                })
-                .catch(error => {
-                    console.log('ServiceWorker registration failed');
-                });
+                } catch (error) {
+                    console.log('Service Worker registration failed:', error);
+                }
             });
         }
 
@@ -585,8 +854,8 @@
         });
 
         window.addEventListener('appinstalled', () => {
-            isInstalled = true;
             hideInstallPrompt();
+            console.log('PWA was installed');
         });
 
         function showInstallPrompt() {
@@ -633,13 +902,10 @@
         window.addEventListener('online', updateNetworkStatus);
         window.addEventListener('offline', updateNetworkStatus);
 
-        // Phone number detection
+        // Phone number detection function - works completely offline
         function detectCountry() {
             const phoneInput = document.getElementById('phoneInput');
             const phoneNumber = phoneInput.value.trim();
-            const resultCard = document.getElementById('resultCard');
-            const countryResult = document.getElementById('countryResult');
-            const phoneDisplay = document.getElementById('phoneDisplay');
             const detectBtn = document.getElementById('detectBtn');
 
             if (!phoneNumber) {
@@ -651,20 +917,14 @@
             detectBtn.textContent = '🔍 Detecting...';
 
             try {
-                // Parse the phone number using libphonenumber-js
-                const parsed = libphonenumber.parsePhoneNumber(phoneNumber);
-                
-                if (!parsed || !parsed.isValid()) {
+                const result = parsePhoneNumber(phoneNumber);
+                if (result.isValid) {
+                    const countryName = countryData[result.country] || result.country;
+                    showResult(countryName, result.formattedNumber, true);
+                    addToHistory(result.formattedNumber, countryName);
+                } else {
                     throw new Error('Invalid phone number format');
                 }
-
-                const countryCode = parsed.country;
-                const countryName = countryData[countryCode] || countryCode;
-                const formattedNumber = parsed.formatInternational();
-
-                showResult(countryName, formattedNumber, true);
-                addToHistory(formattedNumber, countryName);
-                
             } catch (error) {
                 console.error('Error parsing phone number:', error);
                 showResult('Invalid phone number format. Please include country code (e.g., +1 for US)', phoneNumber, false);
@@ -672,6 +932,92 @@
 
             detectBtn.disabled = false;
             detectBtn.textContent = '🔍 Detect Country';
+        }
+
+        // Offline phone number parsing function
+        function parsePhoneNumber(phoneNumber) {
+            // Remove all non-digit characters except +
+            let cleaned = phoneNumber.replace(/[^\d+]/g, '');
+            
+            // Must start with +
+            if (!cleaned.startsWith('+')) {
+                throw new Error('Phone number must start with country code (+)');
+            }
+
+            // Remove the + for processing
+            cleaned = cleaned.substring(1);
+            
+            if (cleaned.length < 7 || cleaned.length > 15) {
+                throw new Error('Invalid phone number length');
+            }
+
+            // Try to match country codes (longest first)
+            const sortedCodes = Object.keys(phonePatterns).sort((a, b) => b.length - a.length);
+            
+            for (const code of sortedCodes) {
+                if (cleaned.startsWith(code)) {
+                    const nationalNumber = cleaned.substring(code.length);
+                    const pattern = phonePatterns[code];
+                    
+                    if (nationalNumber.length >= pattern.minLength && nationalNumber.length <= pattern.maxLength) {
+                        return {
+                            isValid: true,
+                            country: pattern.country,
+                            countryCode: code,
+                            nationalNumber: nationalNumber,
+                            formattedNumber: formatPhoneNumber(code, nationalNumber)
+                        };
+                    }
+                }
+            }
+            
+            throw new Error('Unrecognized country code or invalid number format');
+        }
+
+        // Format phone number for display
+        function formatPhoneNumber(countryCode, nationalNumber) {
+            // Basic formatting - add spaces for readability
+            let formatted = '+' + countryCode + ' ';
+            
+            // Add basic formatting based on country
+            switch (countryCode) {
+                case '1': // US/Canada
+                    if (nationalNumber.length === 10) {
+                        formatted += nationalNumber.substring(0, 3) + ' ' + 
+                                   nationalNumber.substring(3, 6) + ' ' + 
+                                   nationalNumber.substring(6);
+                    } else {
+                        formatted += nationalNumber;
+                    }
+                    break;
+                case '44': // UK
+                    if (nationalNumber.length >= 10) {
+                        formatted += nationalNumber.substring(0, 2) + ' ' + 
+                                   nationalNumber.substring(2, 6) + ' ' + 
+                                   nationalNumber.substring(6);
+                    } else {
+                        formatted += nationalNumber;
+                    }
+                    break;
+                case '49': // Germany
+                    if (nationalNumber.length >= 10) {
+                        formatted += nationalNumber.substring(0, 2) + ' ' + 
+                                   nationalNumber.substring(2);
+                    } else {
+                        formatted += nationalNumber;
+                    }
+                    break;
+                default:
+                    // Generic formatting - add space every 3-4 digits
+                    let remaining = nationalNumber;
+                    while (remaining.length > 4) {
+                        formatted += remaining.substring(0, 3) + ' ';
+                        remaining = remaining.substring(3);
+                    }
+                    formatted += remaining;
+            }
+            
+            return formatted;
         }
 
         function showResult(country, phone, isSuccess) {
@@ -696,8 +1042,8 @@
             searchHistory.unshift(historyItem);
             searchHistory = searchHistory.slice(0, 10);
             
-            // Save to localStorage
-            localStorage.setItem('phoneSearchHistory', JSON.stringify(searchHistory));
+            // Save to storage
+            saveHistory();
             
             // Update display
             updateHistoryDisplay();
@@ -715,9 +1061,13 @@
             historySection.style.display = 'block';
             historyList.innerHTML = '';
 
-            searchHistory.forEach(item => {
+            searchHistory.forEach((item, index) => {
                 const historyItem = document.createElement('div');
                 historyItem.className = 'history-item';
+                historyItem.onclick = () => {
+                    document.getElementById('phoneInput').value = item.phone;
+                    detectCountry();
+                };
                 historyItem.innerHTML = `
                     <div class="history-phone">${item.phone}</div>
                     <div class="history-country">${item.country}</div>
@@ -725,6 +1075,40 @@
                 historyList.appendChild(historyItem);
             });
         }
+
+        // Examples functionality
+        function toggleExamples() {
+            const menu = document.getElementById('examplesMenu');
+            const btn = document.getElementById('exampleBtn');
+            
+            if (menu.classList.contains('show')) {
+                menu.classList.remove('show');
+                btn.innerHTML = '💡';
+                btn.style.transform = 'rotate(0deg)';
+            } else {
+                menu.classList.add('show');
+                btn.innerHTML = '✖️';
+                btn.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function fillExample(number) {
+            document.getElementById('phoneInput').value = number;
+            toggleExamples(); // Close the menu
+            detectCountry();
+        }
+
+        // Close examples menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('examplesMenu');
+            const btn = document.getElementById('exampleBtn');
+            
+            if (!menu.contains(event.target) && !btn.contains(event.target)) {
+                menu.classList.remove('show');
+                btn.innerHTML = '💡';
+                btn.style.transform = 'rotate(0deg)';
+            }
+        });
 
         // Enter key support
         document.getElementById('phoneInput').addEventListener('keypress', function(event) {
@@ -749,23 +1133,6 @@
             event.target.value = value;
         });
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            updateNetworkStatus();
-            updateHistoryDisplay();
-            
-            // Auto-focus input on desktop
-            if (window.innerWidth > 768) {
-                document.getElementById('phoneInput').focus();
-            }
-        });
-
-        // Add some example numbers for testing
-        function fillExample(number) {
-            document.getElementById('phoneInput').value = number;
-            detectCountry();
-        }
-
         // Keyboard shortcuts
         document.addEventListener('keydown', function(event) {
             // Ctrl/Cmd + K to focus input
@@ -774,60 +1141,26 @@
                 document.getElementById('phoneInput').focus();
                 document.getElementById('phoneInput').select();
             }
+            
+            // Escape to close examples
+            if (event.key === 'Escape') {
+                const menu = document.getElementById('examplesMenu');
+                const btn = document.getElementById('exampleBtn');
+                menu.classList.remove('show');
+                btn.innerHTML = '💡';
+                btn.style.transform = 'rotate(0deg)';
+            }
         });
-    </script>
 
-    <!-- Quick examples (hidden by default, can be shown with a button) -->
-    <div style="position: fixed; bottom: 80px; right: 20px; display: none;" id="exampleMenu">
-        <div style="background: rgba(0,0,0,0.95); padding: 15px; border-radius: 12px; font-size: 12px; border: 1px solid rgba(128, 128, 128, 0.3); backdrop-filter: blur(20px); color: white;">
-            <div style="margin-bottom: 10px; font-weight: bold;">Try these examples:</div>
-            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+1 415 555 2671')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇺🇸 +1 415 555 2671</div>
-            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+44 20 7946 0958')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇬🇧 +44 20 7946 0958</div>
-            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+49 30 12345678')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇩🇪 +49 30 12345678</div>
-            <div style="cursor: pointer; padding: 5px 0; opacity: 0.8; transition: opacity 0.2s;" onclick="fillExample('+81 3 1234 5678')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">🇯🇵 +81 3 1234 5678</div>
-        </div>
-    </div>
-
-    <style>
-        @media (prefers-color-scheme: light) {
-            #exampleMenu > div {
-                background: rgba(255,255,255,0.95) !important;
-                color: black !important;
-                border-color: rgba(128, 128, 128, 0.3) !important;
-            }
-        }
-    </style>
-
-    <!-- Floating action button for examples -->
-    <div style="position: fixed; bottom: 140px; right: 20px; width: 56px; height: 56px; background: rgba(255, 107, 107, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.3); font-size: 24px; transition: all 0.3s ease;" onclick="toggleExamples()" id="exampleBtn">
-        💡
-    </div>
-
-    <script>
-        function toggleExamples() {
-            const menu = document.getElementById('exampleMenu');
-            const btn = document.getElementById('exampleBtn');
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNetworkStatus();
+            loadHistory();
+            updateHistoryDisplay();
             
-            if (menu.style.display === 'none' || menu.style.display === '') {
-                menu.style.display = 'block';
-                btn.innerHTML = '✖️';
-                btn.style.transform = 'rotate(180deg)';
-            } else {
-                menu.style.display = 'none';
-                btn.innerHTML = '💡';
-                btn.style.transform = 'rotate(0deg)';
-            }
-        }
-
-        // Close examples menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById('exampleMenu');
-            const btn = document.getElementById('exampleBtn');
-            
-            if (!menu.contains(event.target) && !btn.contains(event.target)) {
-                menu.style.display = 'none';
-                btn.innerHTML = '💡';
-                btn.style.transform = 'rotate(0deg)';
+            // Auto-focus input on desktop
+            if (window.innerWidth > 768) {
+                document.getElementById('phoneInput').focus();
             }
         });
     </script>
